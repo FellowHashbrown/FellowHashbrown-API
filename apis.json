@@ -1,0 +1,909 @@
+[
+    {
+        "api_name": "hangman",
+        "requests": [
+            {
+                "type": "GET",
+                "endpoint": "/hangman",
+                "description": [
+                    "Gets a random word to use in a hangman game."
+                ],
+                "parameters": null,
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "get a hangman word",
+                        "response": {
+                            "success": true,
+                            "value": "wheel"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "api_name": "scramble",
+        "requests": [
+            {
+                "type": "GET",
+                "endpoint": "/scramble",
+                "description": [
+                    "Gets a random word to use in a scramble game."
+                ],
+                "parameters": null,
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "get a scramble word",
+                        "response": {
+                            "success": true,
+                            "value": "unused",
+                            "hints": [
+                                "unutilized",
+                                "unemployed",
+                                "unexploited",
+                                "spare",
+                                "surplus"
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "api_name": "morse",
+        "requests": [
+            {
+                "type": "GET",
+                "endpoint": "/morse/encode",
+                "description": [
+                    "Converts regular text into International Morse Code."
+                ],
+                "parameters": [
+                    {
+                        "parameter": "text",
+                        "type": "string",
+                        "default": "required",
+                        "is_required": true,
+                        "description": [
+                            "The text to convert into morse code. Can be uppercase or lowercase letters between A-Z or numbers between 1-9"
+                        ]
+                    }
+                ],
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "retrieve converted morse code",
+                        "response": {
+                            "success": true,
+                            "value": ".... . .-.. .-.. ---"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "trying to encode empty text",
+                        "response": {
+                            "success": false,
+                            "value": "Cannot encode empty text"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "trying to encode morse code",
+                        "response": {
+                            "success": true,
+                            "value": "Cannot encode morse code"
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "GET",
+                "endpoint": "/morse/decode",
+                "description": [
+                    "Converts regular text from International Morse Code."
+                ],
+                "parameters": [
+                    {
+                        "parameter": "text",
+                        "type": "string",
+                        "default": "required",
+                        "is_required": true,
+                        "description": [
+                            "The text to convert from morse code."
+                        ]
+                    }
+                ],
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "retrieve converted text",
+                        "response": {
+                            "success": true,
+                            "value": "hello"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "trying to decode empty text",
+                        "response": {
+                            "success": false,
+                            "value": "Cannot decode empty text"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "trying to decode regular text",
+                        "response": {
+                            "success": true,
+                            "value": "Cannot decode morse code"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "api_name": "logic",
+        "requests": [
+            {
+                "type": "GET",
+                "endpoint": "/logic/parse",
+                "description": [
+                    "Parses and evaluates a logical expression whether in pseudocode, code, boolean algebra, or bitwise.",
+                    "<span class=\"required\">NOTE: don't forget to make sure the expression is URL-safe before you call the API!</span>"
+                ],
+                "parameters": [
+                    {
+                        "parameter": "expression",
+                        "type": "string",
+                        "default": "required",
+                        "is_required": true,
+                        "description": [
+                            "The logical expression to parse and evaluate"
+                        ]
+                    },
+                    {
+                        "parameter": "operator",
+                        "type": "int",
+                        "default": 0,
+                        "is_required": false,
+                        "description": [
+                            "The style of operators to use when getting a truth table of an expression.",
+                            "Valid parameters:",
+                            "&nbsp; <span class=\"code-object\">0</span> = pseudo (NOT, AND, OR)",
+                            "&nbsp; <span class=\"code-object\">1</span> = code (!, &&, ||)",
+                            "&nbsp; <span class=\"code-object\">2</span> = boolean (-, *, +)",
+                            "&nbsp; <span class=\"code-object\">3</span> = bitwise (~, &, |)"
+                        ]
+                    },
+                    {
+                        "parameter": "simplify",
+                        "type": "boolean",
+                        "default": "false",
+                        "is_required": false,
+                        "description": [
+                            "Whether or not to simplify the expression as best as possible"
+                        ]
+                    },
+                    {
+                        "parameter": "table",
+                        "type": "boolean",
+                        "default": "false",
+                        "is_required": false,
+                        "description": [
+                            "Whether or not to receive a truth table for the logical expression"
+                        ]
+                    }
+                ],
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "get the evaluated expression",
+                        "response": {
+                            "success": true,
+                            "value": [
+                                {
+                                    "truth_values": {
+                                        "a": true,
+                                        "b": true
+                                    },
+                                    "truth_value": true
+                                },
+                                "... More Expressions ... "
+                            ]
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "get the simplified expression",
+                        "response": {
+                            "success": true,
+                            "value": {
+                                "minterm": "(a AND b) OR (a AND NOT c)",
+                                "maxterm": "a AND (b OR NOT c)",
+                                "simplified": "a AND (b OR NOT c)",
+                                "functional": "or(and(a, b), and(a, not(c)))",
+                                "functional_simplified": "and(a, or(b, not(c)))"
+                            }
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "get the truth table",
+                        "response": {
+                            "success": true,
+                            "value": [
+                                "| a | b | c | a AND b OR a AND NOT c |",
+                                "+---+---+---+------------------------+",
+                                "| 0 | 0 | 0 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |",
+                                "| 0 | 0 | 1 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |",
+                                "| 0 | 1 | 0 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |",
+                                "| 0 | 1 | 1 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |",
+                                "| 1 | 0 | 0 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |",
+                                "| 1 | 0 | 1 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |",
+                                "| 1 | 1 | 0 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |",
+                                "| 1 | 1 | 1 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |"
+                            ]
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "trying to parse an empty expression",
+                        "response": {
+                            "success": false,
+                            "error": "You need an expression to parse"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "unknown parsing error",
+                        "response": {
+                            "success": false,
+                            "error": "An unknown error has occurred and has been sent to the developer"
+                        }
+                    }
+                ]
+            },
+            {
+                "type": "GET",
+                "endpoint": "/logic/qm",
+                "description": [
+                    "Processes the Quine-McCluskey algorithm given the proper values that are required by the algorithm"
+                ],
+                "parameters": [
+                    {
+                        "parameter": "variables",
+                        "type": "string[]",
+                        "default": "required",
+                        "is_required": true,
+                        "description": [
+                            "The list of variables used in the expression"
+                        ]
+                    },
+                    {
+                        "parameter": "values",
+                        "type": "int[]",
+                        "default": "required",
+                        "is_required": true,
+                        "description": [
+                            "The list of decimal values where the expression evaluates to true"
+                        ]
+                    },
+                    {
+                        "parameter": "dont_cares",
+                        "type": "int[]",
+                        "default": "None",
+                        "is_required": false,
+                        "description": [
+                            "The list of decimal values where there are don't cares in the expresion"
+                        ]
+                    },
+                    {
+                        "parameter": "as_maxterm",
+                        "type": "boolean",
+                        "default": "false",
+                        "is_required": false,
+                        "description": [
+                            "Whether or not to process the Quine-McCluskey algorithm using the maxterm values"
+                        ]
+                    }
+                ],
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "get the evaluated expression",
+                        "response": {
+                            "success": true,
+                            "value": "(a OR b) AND (a OR c)"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "trying to parse an empty expression",
+                        "response": {
+                            "success": false,
+                            "error": "You need an expression to parse"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "unknown parsing error",
+                        "response": {
+                            "success": false,
+                            "error": "An unknown error has occurred and has been sent to the developer"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "api_name": "profanity",
+        "requests": [
+            {
+                "type": "GET",
+                "endpoint": "/profanity",
+                "description": [
+                    "Filters text to test whether or not it is an obfuscated profane word"
+                ],
+                "parameters": [
+                    {
+                        "parameter": "text",
+                        "type": "string",
+                        "default": "required",
+                        "is_required": true,
+                        "description": [
+                            "The text to test for profanity"
+                        ]
+                    }
+                ],
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "finding a profane word",
+                        "response": {
+                            "success": true,
+                            "profane": true,
+                            "likely_word": "asshole"
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "finding no profanity",
+                        "response": {
+                            "success": true,
+                            "profane": false
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "trying to filter empty text",
+                        "response": {
+                            "success": false,
+                            "error": "Cannot filter empty text"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "api_name": "llamas",
+        "requests": [
+            {
+                "type": "GET",
+                "endpoint": "/llamas",
+                "description": [
+                    "Retrieves a random line of dialogue from Llamas With Hats"
+                ],
+                "parameters": [
+                    {
+                        "parameter": "episode",
+                        "type": "int",
+                        "default": "random",
+                        "is_required": false,
+                        "description": ["The episode number to get a line from. Can be between 1-12"]
+                    },
+                    {
+                        "parameter": "author",
+                        "type": "string",
+                        "default": "random",
+                        "is_required": false,
+                        "description": ["The speaker to get text from. Can be Carl or Paul"]
+                    },
+                    {
+                        "parameter": "any",
+                        "type": "boolean",
+                        "default": "false",
+                        "is_required": false,
+                        "description": ["Whether or not to choose any type of quote. Even one-worded quotes or action lines"]
+                    },
+                    {
+                        "parameter": "fullScript",
+                        "type": "boolean",
+                        "default": "false",
+                        "is_required": false,
+                        "description": ["Whether or not to get the full script of quotes. To use this, you must provide an episode to get the full script from"]
+                    }
+                ],
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "retrieving a random/specific quote",
+                        "response": {
+                            "success": true,
+                            "episode": true,
+                            "image": "https://i.quotev.com/img/q/u/16/5/30/e37ac6e9b1-supe.jpg",
+                            "author": "Carl",
+                            "value": "My stomach was making the rumblies."
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "retrieving the full script of an episode",
+                        "response": {
+                            "success": true,
+                            "episode": 1,
+                            "image": "https://i.quotev.com/img/q/u/16/5/30/e37ac6e9b1-supe.jpg",
+                            "quotes": [
+                                {
+                                    "author": "Paul",
+                                    "value": "CAAAARL! THERE IS A DEAD HUMAN IN OUR HOUSE!!"
+                                },
+                                "... More Quotes ..."
+                            ]
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "trying to get a full script without an episode number",
+                        "response": {
+                            "success": false,
+                            "error": "No episode given"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "specifying an invalid author",
+                        "response": {
+                            "success": false,
+                            "error": "Invalid author"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "specifying an invalid episode",
+                        "response": {
+                            "success": true,
+                            "error": "Invalid episode"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "api_name": "strangePlanet",
+        "requests": [
+            {
+                "type": "GET",
+                "endpoint": "/strangePlanet",
+                "description": [
+                    "Gets a random comic or reaction from <span class=\"link\">Nathan W. Pyle's Strange Planet</span> series"
+                ],
+                "parameters": [
+                    {
+                        "parameter": "keywords",
+                        "type": "string",
+                        "default": "null",
+                        "is_required": false,
+                        "description": [
+                            "Any keywords to search up a comic by"
+                        ]
+                    },
+                    {
+                        "parameter": "recent",
+                        "type": "boolean",
+                        "default": "false",
+                        "is_required": false,
+                        "description": [
+                            "Whether or not you want the most recent comic"
+                        ]
+                    },
+                    {
+                        "parameter": "random",
+                        "type": "boolean",
+                        "default": "false",
+                        "is_required": false,
+                        "description": [
+                            "Whether or not you want a random comic",
+                            "<span class=\"required\">NOTE: The keywords argument does not apply to random comics</span>"
+                        ]
+                    },
+                    {
+                        "parameter": "target",
+                        "type": "string",
+                        "default": "comics",
+                        "is_required": false,
+                        "description": [
+                            "The specific type of comic to get",
+                            "Must be from the following:",
+                            "&nbsp; <span class=\"code-object\">comics</span>",
+                            "&nbsp; <span class=\"code-object\">reactions</span>",
+                            "&nbsp; <span class=\"code-object\">all</span>"
+                        ]
+                    },
+                    {
+                        "parameter": "limit",
+                        "type": "int",
+                        "default": "1",
+                        "is_required": false,
+                        "description": [
+                            "The maximum amount of images to return",
+                            "<span class=\"required\">NOTE: This only works with the keyword parameter specified</span>"
+                        ]
+                    }
+                ],
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "retrieving a random/recent comic or reaction",
+                        "response": {
+                            "success": true,
+                            "data": "https://i.imgur.com/EPpUc4w.jpg"
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "retrieving a searched comic or reaction",
+                        "response": {
+                            "success": true,
+                            "data": [
+                                "https://i.imgur.com/EPpUc4w.jpg",
+                                "... More Comics ..."
+                            ]
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "api_name": "animals",
+        "requests": [
+            {
+                "type": "GET",
+                "endpoint": "/animals",
+                "description": [
+                    "Gets a random specified animal picture from the internet"
+                ],
+                "parameters": [
+                    {
+                        "parameter": "type",
+                        "type": "string",
+                        "default": "required",
+                        "is_required": true,
+                        "description": [
+                            "Must be an animal from the following:",
+                            "&nbsp; <span class=\"code-object\">penguin</span>",
+                            "&nbsp; <span class=\"code-object\">elephant</span>",
+                            "&nbsp; <span class=\"code-object\">sloth</span>",
+                            "&nbsp; <span class=\"code-object\">rabbit</span>",
+                            "&nbsp; <span class=\"code-object\">dog</span>",
+                            "&nbsp; <span class=\"code-object\">cat</span>",
+                            "&nbsp; <span class=\"code-object\">fox</span>",
+                            "&nbsp; <span class=\"code-object\">hedgehog</span>",
+                            "&nbsp; <span class=\"code-object\">bat</span>",
+                            "&nbsp; <span class=\"code-object\">squirrel</span>",
+                            "&nbsp; <span class=\"code-object\">hamster</span>"
+                        ]
+                    },
+                    {
+                        "parameter": "baby",
+                        "type": "boolean",
+                        "default": "false",
+                        "is_required": false,
+                        "description": [
+                            "Whether or not you want a picture that is a baby version of the animal"
+                        ]
+                    }
+                ],
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "getting an animal picture",
+                        "response": {
+                            "success": true,
+                            "value": "https://i.imgur.com/iJBIUkv.jpg",
+                            "baby_animal": true
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "specifying an invalid animal",
+                        "response": {
+                            "success": false,
+                            "error": "Invalid animal"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "api_name": "office",
+        "requests": [
+            {
+                "type": "GET",
+                "endpoint": "/office",
+                "description": [
+                    "Gets a random line of dialogue from The Office"
+                ],
+                "parameters": [
+                    {
+                        "parameter": "season",
+                        "type": "int",
+                        "default": "null",
+                        "is_required": false,
+                        "description": [
+                            "Must be a season in the range 1-9"
+                        ]
+                    },
+                    {
+                        "parameter": "episode",
+                        "type": "int",
+                        "default": "null",
+                        "is_required": false,
+                        "description": [
+                            "The number of the episode to get. If the episode number exceeds the amount of episode in the given season, an error will be given"
+                        ]
+                    },
+                    {
+                        "parameter": "type",
+                        "type": "string",
+                        "default": "aired",
+                        "is_required": false,
+                        "description": [
+                            "The type of quote to get. Can be any of the following:",
+                            "&nbsp; <span class=\"code-object\">aired</span>",
+                            "&nbsp; <span class=\"code-object\">deleted</span>",
+                            "&nbsp; <span class=\"code-object\">any</span>"
+                        ]
+                    }
+                ],
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "retrieving a random quote",
+                        "response": {
+                            "success": true,
+                            "value": "Oh that's Andy. He's just hanging out.",
+                            "author": "Erin",
+                            "season": 8,
+                            "episode": 22,
+                            "deleted": false
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "trying to get a specific episode without the season",
+                        "response": {
+                            "success": false,
+                            "error": "Season not given. Episode was"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "specifying an invalid episode in a valid season",
+                        "response": {
+                            "success": false,
+                            "error": "Invalid episode"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "specifying an invalid season",
+                        "response": {
+                            "success": false,
+                            "error": "Invalid season"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "specifying an invalid quote type",
+                        "response": {
+                            "success": false,
+                            "error": "Invalid quote type"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "api_name": "gameOfLife",
+        "requests": [
+            {
+                "type": "GET",
+                "endpoint": "/gameOfLife",
+                "description": [
+                    "Retrieves specific, or all, attributes of Hasbro's Game of Life"
+                ],
+                "parameters": [
+                    {
+                        "parameter": "target",
+                        "type": "string",
+                        "default": "required",
+                        "is_required": true,
+                        "description": [
+                            "A specific attribute to retrieve of the Game of Life",
+                            "Valid attributes are:",
+                            "&nbsp; <span class=\"code-object\">college</span>",
+                            "&nbsp; <span class=\"code-object\">career</span>",
+                            "&nbsp; <span class=\"code-object\">house</span>",
+                            "&nbsp; <span class=\"code-object\">pet</span>",
+                            "&nbsp; <span class=\"code-object\">action</span>",
+                            "&nbsp; <span class=\"code-object\">board</span>",
+                            "&nbsp; <span class=\"code-object\">game_of_life</span>"
+                        ]
+                    }
+                ],
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "retrieving the regular career cards",
+                        "response": {
+                            "success": true,
+                            "data": [
+                                {
+                                    "name": "Actor",
+                                    "salary": 100000,
+                                    "bonus": 5
+                                },
+                                "... More Cards ..."
+                            ]
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "retrieving the college career cards",
+                        "response": {
+                            "success": true,
+                            "data": [
+                                {
+                                    "name": "Vet",
+                                    "salary": 100000,
+                                    "bonus": 7
+                                },
+                                "... More Cards ..."
+                            ]
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "retrieving the house cards",
+                        "response": {
+                            "success": true,
+                            "data": [
+                                {
+                                    "name": "City Penthouse",
+                                    "purchase": 600000,
+                                    "spin_red": 650000,
+                                    "spin_black": 700000
+                                },
+                                "... More Cards ..."
+                            ]
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "retrieving the pet cards",
+                        "response": {
+                            "success": true,
+                            "data": [
+                                {
+                                    "name": "Rescue a Stray!",
+                                    "action_text": "Collect 10k from each player",
+                                    "add": true,
+                                    "action": "collect_each",
+                                    "amount": 10000,
+                                    "bank": false
+                                },
+                                "... More Cards ..."
+                            ]
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "retrieving the action cards",
+                        "response": {
+                            "success": true,
+                            "data": [
+                                {
+                                    "name": "You're voted \"The Nicest Person Ever!\"",
+                                    "action": {
+                                        "text": null,
+                                        "type": "collect",
+                                        "target": "player",
+                                        "special": null,
+                                        "bank": true
+                                    },
+                                    "spin": {
+                                        "type": "number",
+                                        "low": {
+                                            "text": "Spin 1-5: Collect 50k from the bank",
+                                            "low": 1,
+                                            "high": 5,
+                                            "amount": 50000
+                                        },
+                                        "medium": null,
+                                        "high": {
+                                            "text": "Spin 6-10: Collect 100k from the bank",
+                                            "low": 6,
+                                            "high": 10,
+                                            "amount": 100000
+                                        },
+                                        "amount": null
+                                    }
+                                },
+                                "...More Cards..."
+                            ]
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "retrieving the game board",
+                        "response": {
+                            "success": true,
+                            "data": {
+                                "c1": {
+                                    "type": "action",
+                                    "path": "college",
+                                    "stop": false,
+                                    "next": "c2"
+                                },
+                                "... More Spaces ...": ""
+                            }
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "retrieving all the game of life data",
+                        "response": {
+                            "success": true,
+                            "career_cards": [
+                                "... List of Career Cards ..."
+                            ],
+                            "college_career_cards": [
+                                "... List of College Career Cards ..."
+                            ],
+                            "house_cards": [
+                                "... List of House Cards ..."
+                            ],
+                            "pet_cards": [
+                                "... List of Pet Cards ..."
+                            ],
+                            "action_cards": [
+                                "... List of Action Cards ..."
+                            ],
+                            "board_spaces": {
+                                "... JSON of Board Spaces ...": ""
+                            }
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "specifying an invalid attribute",
+                        "response": {
+                            "success": false,
+                            "error": "Invalid attribute"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+]
