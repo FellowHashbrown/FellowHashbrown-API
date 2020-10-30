@@ -1,5 +1,6 @@
 from typing import Union
-from variable import Variable
+
+from .variable import Variable
 
 
 class Expression:

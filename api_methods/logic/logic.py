@@ -1,22 +1,22 @@
 from api_methods.base_api import BaseAPI
 
-from api_methods.logic.tree import Tree
-from api_methods.logic.qm import QM
+from .tree import Tree
+from .qm import QM
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 class LogicAPI:
-    """The Logic API will handl all Boolean Expression and 
+    """The Logic API will handle all Boolean Expression and 
     Quine-McCluskey functions
     """
 
-    class Parser(BaseAPI):
+    class Parse(BaseAPI):
         """The Parser class is what handles the Boolean Expression
         parsing and evaluating
         """
 
         def get(self):
-            """Gets the result of the Parser API"""
+            """Gets the result of the Parse API"""
 
             parameters = super().get()
             simplify = parameters.get("simplify")
@@ -63,4 +63,6 @@ class LogicAPI:
         def get(self):
             """Gets the result of the QuineMcCluskey API"""
 
-            pass
+            parameters = super().get()
+
+            return { "success": True, "value": True }, 200

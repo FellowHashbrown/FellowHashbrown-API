@@ -3,6 +3,9 @@ from api_methods.base_api import BaseAPI
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 class MorseAPI:
+    """The Morse API handles all the processes with
+    encoding text into Morse and decoding text from Morse
+    """
 
     CHAR_TO_MORSE = {
         "A": ".-",
@@ -47,7 +50,13 @@ class MorseAPI:
 
     MORSE_CHARS = [" ", "-", "."]
 
-    def enc_dec_text(encode, text):
+    def enc_dec_text(encode: bool, text: str):
+        """Encodes or decodes the specified text 
+        into or from Morse, respectively
+
+        :param encode: Whether to encode or decode
+        :param text: The text to either encode or decode
+        """
         
         # Encode/decode the text
         text = text.replace("%20", " ").upper()
@@ -82,7 +91,10 @@ class MorseAPI:
             return { "success": True, "value": converted.strip().lower() }, 200
 
     class Encode(BaseAPI):
+        """Handles the encoding of text into Morse"""
+
         def get(self):
+
             parameters = super().get()
             text = parameters.get("text")
 
@@ -95,7 +107,10 @@ class MorseAPI:
 
         
     class Decode(BaseAPI):
+        """Handles the decoding of text from Morse"""
+
         def get(self):
+
             parameters = super().get()
             text = parameters.get("text")
 

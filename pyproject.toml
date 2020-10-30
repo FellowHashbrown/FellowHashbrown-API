@@ -1,18 +1,19 @@
-[build-system]
-build-backend = "poetry.masonry.api"
-requires = ["poetry>=0.12"]
-
-[tool]
 [tool.poetry]
-authors = ["Your Name <you@example.com>"]
-description = ""
 name = "api"
 version = "0.1.0"
+description = ""
+authors = ["repl.it user <replituser@example.com>"]
+
 [tool.poetry.dependencies]
-Flask = "^1.1"
-Flask-RESTful = "^0.3.8"
-pymongo = "^3.10"
 python = "^3.8"
-lark = "^0.10.1"
-quine-mccluskey = "^0.3"
+Flask-RESTful = "^0.3.8"
+Flask = "^1.1.2"
+lark-parser = "^0.10.1"
+pymongo = "^3.11.0"
+Jinja2 = "^2.11.2"
+
 [tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

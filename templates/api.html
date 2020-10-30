@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <link href="/static/style.css" rel="stylesheet" type="text/css" />
+
+        <link rel="shortcut icon" href="/static/favicon.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+        <link rel="manifest" href="/static/site.webmanifest">
+        <link rel="mask-icon" href="/static/safari-pinned-tab.svg" color="#202020">
+        <meta name="msapplication-TileColor" content="#202020">
+        <meta name="msapplication-TileImage" content="/static/mstile-144x144.png">
+        <meta name="theme-color" content="#202020">
+        <meta name="msapplication-config" content="/static/browserconfig.xml">
+
+        <meta property="theme-color" content="#EC7600" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="assets/logo.png" />
+
+        <meta property="og:site_name" content="Fellow Hashbrown" />
+        <meta property="og:url" content="https://api.fellowhashbrown.com{{ page.endpoint }}" />
+        <meta property="og:description" content="{{ page.description }}" />
+        <meta property="og:title" content="{{ page.title }}" />
+        <title>{{ page.title }}</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
+    </head>
+    <body class="body">
+
+        <!--Top Nav Bar (no navigation)-->
+        <div class="topnav">
+            <img src="/static/logo.png" class="icon-image">
+        </div>
+
+        <!--Content-->
+        <div class="content">
+            <h1 class="title">
+                <span class="code-class"><code class="code-field">website</code>.</span><code class="code-field">{{ page.page }}</code>();
+            </h1>
+            <div class="title-block">
+                {{ page.description }}
+            </div>
+
+            {% for api in apis -%}
+                <a name="{{ api.api_name }}"></a>
+                <h2 class="section">
+                    <span class="code-class"><code class="code-field">api</code>.</span><code class="code-field">{{ api.api_name }}</code>();
+                </h2>
+                <div class="section-block">
+                    {% for request in api.requests -%}
+                        <div>
+                            <input type="checkbox" class="api-response-label" id="{{ api.api_name }}-request-{{ loop.index0 }}" name="menu" />
+                            <label for="{{ api.api_name }}-request-{{ loop.index0 }}">{{ request.type }} <span class="code-string">{{ request.endpoint }}</span> &#9660;</label>
+                            <ul class="api-response">
+                                <p>
+                                    {% for line in request.description -%}
+                                        {{ line|safe }} <br>
+                                    {%- endfor %}
+                                </p>
+                                <p style="font-weight: bold;">parameters</p>
+                                {% if request.parameters %}
+                                    <table class="api-parameter-table">
+                                        <thead>
+                                            <th>parameter</th>
+                                            <th>type</th>
+                                            <th>default</th>
+                                            <th>description</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for parameter in request.parameters -%}
+                                                <tr>
+                                                    <td>{{ parameter.parameter }}</td>
+                                                    <td>{{ parameter.type }}</td>
+                                                    <td>
+                                                        {% if parameter.is_required %}
+                                                            <span class="required">{{ parameter.default }}</span>
+                                                        {% else %}
+                                                            {{ parameter.default }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% for line in parameter.description -%}
+                                                            {{ line|safe }} <br>
+                                                        {% endfor %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    none
+                                {% endif %}
+
+                                <p style="font-weight: bold;">responses<p>
+                                <ul class="api-responses">
+                                {% for response in request.responses -%}
+                                    <li>
+                                        <input type="checkbox" class="api-response-label" id="{{ request.endpoint }}-response-{{ response }}" name="menu" />
+                                        <label for="{{ request.endpoint }}-response-{{ response }}">{{ response.description }} <span class="api-response-code">{{ response.code }}</span> &#9660;</label>
+                                        <ul class="api-response">
+                                            <div class="api-json-response">
+                                                {{ response.response|safe }}
+                                            </div>
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+        </div>
+    </body>
+    <br>
+    <footer class="footer">
+        <small><code>Copyright &copy; 2018<script>new Date().getFullYear()>2018&&document.write("-"+new Date().getFullYear());</script>, Jonah Pierce</code></small>
+    </footer>
+</html>

@@ -1,11 +1,13 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, render_template
 from flask_restful import Api
-from json import load
+from json import load, dumps
+from random import randint
 from threading import Thread
 
 from api_methods.animals import AnimalsAPI
 from api_methods.morse import MorseAPI
 from api_methods.strange_planet import StrangePlanetAPI
+from api_methods.logic.logic import LogicAPI
 
 # # # # # # # # # # # # # # # # # # # # 
 
@@ -14,40 +16,55 @@ api = Api(app)
 
 # # # # # # # # # # # # # # # # # # # # 
 
-@app.route("/", methods = ["GET"])
-def api_page():
-    with open("apis.json", "r") as apis_json:
-        apis_json = load(apis_json)
+@app.route("/")
+def home():
+
+    # Load the API data
+    with open("apis.json", "r") as api_json:
+        apis_json = load(api_json)
+    
+    # Convert the response JSONs to a string formatted
+    #   in json style
+    for api in apis_json:
+        for request in api["requests"]:
+            for response in request["responses"]:
+                response["response"] = dumps(
+                    response["response"],
+                    indent = "&nbsp;&nbsp;").replace(
+                        "\n", "<br>")
+    
     return render_template(
-        "index.html",
+        "api.html",
         apis = apis_json,
         page = {
-            'page': 'api',
+            "page": "api",
             "title": "APIs",
             "description": "if you're a developer, you've reached the available APIs that i've written and you know exactly what to do! if you're not a developer, you may not understand this but feel free to try :)"
-        },
-        template_folder = "."
-    )
+        }
+    ), 200
 
 """
 API.add_resource(api.hangman.HangmanAPI, '/hangman')
 API.add_resource(api.scramble.ScrambleAPI, '/scramble')
-API.add_resource(api.logic.LogicAPI.Parser, '/logic/parse')
-API.add_resource(api.logic.LogicAPI.QuineMcCluskey, '/logic/qm')
 API.add_resource(api.profanity.ProfanityAPI, '/profanity')
 API.add_resource(api.shows.llamas.LlamasAPI, '/shows/llama')
 API.add_resource(api.shows.office.OfficeAPI, '/shows/office')
 API.add_resource(api.game_of_life.GameOfLifeAPI, '/gameOfLife')
 """
+
 api.add_resource(AnimalsAPI, '/animals')
 api.add_resource(MorseAPI.Encode, '/morse/encode')
 api.add_resource(MorseAPI.Decode, '/morse/decode')
 api.add_resource(StrangePlanetAPI, '/strangePlanet')
+api.add_resource(LogicAPI.Parse, '/logic/parse')
+api.add_resource(LogicAPI.QuineMcCluskey, '/logic/qm')
 
 # # # # # # # # # # # # # # # # # # # # 
 
 def run():
-    app.run(host = '0.0.0.0', port = 8080)
+    app.run(
+        host = '0.0.0.0', 
+        port = randint(1000, 9999))
 
 t = Thread(target = run)
 t.start()
