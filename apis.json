@@ -1,58 +1,5 @@
 [
     {
-        "api_name": "hangman",
-        "requests": [
-            {
-                "type": "GET",
-                "endpoint": "/hangman",
-                "description": [
-                    "Gets a random word to use in a hangman game."
-                ],
-                "parameters": null,
-                "responses": [
-                    {
-                        "code": 200,
-                        "description": "get a hangman word",
-                        "response": {
-                            "success": true,
-                            "value": "wheel"
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "api_name": "scramble",
-        "requests": [
-            {
-                "type": "GET",
-                "endpoint": "/scramble",
-                "description": [
-                    "Gets a random word to use in a scramble game."
-                ],
-                "parameters": null,
-                "responses": [
-                    {
-                        "code": 200,
-                        "description": "get a scramble word",
-                        "response": {
-                            "success": true,
-                            "value": "unused",
-                            "hints": [
-                                "unutilized",
-                                "unemployed",
-                                "unexploited",
-                                "spare",
-                                "surplus"
-                            ]
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
         "api_name": "morse",
         "requests": [
             {

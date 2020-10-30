@@ -12,4 +12,6 @@ class DBGameOfLife:
     
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def get_game_of_life(self, target: str=None):
+        pass
     
