@@ -71,7 +71,7 @@ class QM:
             #   is acting like a normal Minterm, other wise OR them together
             return "{}".format(" OR " if self.is_maxterm else " AND ").join([
                 "{}{}".format(
-                    "not " if bit_pattern[bit] == "0" else "",
+                    "NOT " if bit_pattern[bit] == "0" else "",
                     self.variables[bit]
                 )
                 for bit in range(len(bit_pattern))

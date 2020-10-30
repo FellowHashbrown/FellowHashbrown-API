@@ -251,18 +251,10 @@
                     },
                     {
                         "code": 400,
-                        "description": "trying to parse an empty expression",
+                        "description": "any errors that come up will follow the same format",
                         "response": {
-                            "success": false,
-                            "error": "You need an expression to parse"
-                        }
-                    },
-                    {
-                        "code": 400,
-                        "description": "unknown parsing error",
-                        "response": {
-                            "success": false,
-                            "error": "An unknown error has occurred and has been sent to the developer"
+                            "success": false, 
+                            "error": "some error message" 
                         }
                     }
                 ]
@@ -313,27 +305,11 @@
                 ],
                 "responses": [
                     {
-                        "code": 200,
-                        "description": "get the evaluated expression",
-                        "response": {
-                            "success": true,
-                            "value": "(a OR b) AND (a OR c)"
-                        }
-                    },
-                    {
                         "code": 400,
-                        "description": "trying to parse an empty expression",
+                        "description": "any errors that come up will follow the same format",
                         "response": {
-                            "success": false,
-                            "error": "You need an expression to parse"
-                        }
-                    },
-                    {
-                        "code": 400,
-                        "description": "unknown parsing error",
-                        "response": {
-                            "success": false,
-                            "error": "An unknown error has occurred and has been sent to the developer"
+                            "success": false, 
+                            "error": "some error message" 
                         }
                     }
                 ]

@@ -256,6 +256,6 @@ class Tree:
         #   if neither is specified, get the shortest one
         if get_minterm is not None:
             if get_minterm:
-                return minterm_qm
-            return maxterm_qm
-        return min(minterm_qm, maxterm_qm, key = lambda qm: len(qm))
+                return Tree(minterm_qm)
+            return Tree(maxterm_qm)
+        return Tree(min(minterm_qm, maxterm_qm, key = lambda qm: len(qm)))

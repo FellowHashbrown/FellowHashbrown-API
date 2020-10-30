@@ -1,6 +1,6 @@
-from .game_of_life import DBGameOfLife
-from .quotes import DBQuotes
-from .website import DBWebsite
+from .db.game_of_life import DBGameOfLife
+from .db.quotes import DBQuotes
+from .db.website import DBWebsite
 
 class Database:
     """The Database will contain the data for website downloads,
@@ -30,3 +30,5 @@ class Database:
         return self.__website
     
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+database = Database()

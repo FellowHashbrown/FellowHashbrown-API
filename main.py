@@ -9,6 +9,8 @@ from api_methods.morse import MorseAPI
 from api_methods.strange_planet import StrangePlanetAPI
 from api_methods.logic.logic import LogicAPI
 
+from api_methods.secret.redirects import RedirectsAPI
+
 # # # # # # # # # # # # # # # # # # # # 
 
 app = Flask("Fellow Hashbrown APIs")
@@ -58,6 +60,8 @@ api.add_resource(MorseAPI.Decode, '/morse/decode')
 api.add_resource(StrangePlanetAPI, '/strangePlanet')
 api.add_resource(LogicAPI.Parse, '/logic/parse')
 api.add_resource(LogicAPI.QuineMcCluskey, '/logic/qm')
+
+api.add_resource(RedirectsAPI, '/redirects')
 
 # # # # # # # # # # # # # # # # # # # # 
 

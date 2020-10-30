@@ -382,10 +382,7 @@ input:checked~ul.api-response {
 .api-parameter-table {
 	border-collapse: collapse;
 	width: 100%;
-}
-
-.api-parameter-table {
-	font-size: 1.5vw;
+    font-size: 1.5vw;
 }
 
 .api-parameter-table th {
