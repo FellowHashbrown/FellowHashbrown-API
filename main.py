@@ -63,7 +63,7 @@ api.add_resource(StrangePlanetAPI, '/strangePlanet')
 api.add_resource(LogicAPI.Parse, '/logic/parse')
 api.add_resource(LogicAPI.QuineMcCluskey, '/logic/qm')
 
-api.add_resource(RedirectsAPI, '/redirects')
+api.add_resource(RedirectsAPI, '/redirects/<str:project>')
 
 # # # # # # # # # # # # # # # # # # # # 
 
