@@ -314,101 +314,6 @@
         ]
     },
     {
-        "api_name": "llamas",
-        "requests": [
-            {
-                "type": "GET",
-                "endpoint": "/llamas",
-                "description": [
-                    "Retrieves a random line of dialogue from Llamas With Hats"
-                ],
-                "parameters": [
-                    {
-                        "parameter": "episode",
-                        "type": "int",
-                        "default": "random",
-                        "is_required": false,
-                        "description": ["The episode number to get a line from. Can be between 1-12"]
-                    },
-                    {
-                        "parameter": "author",
-                        "type": "string",
-                        "default": "random",
-                        "is_required": false,
-                        "description": ["The speaker to get text from. Can be Carl or Paul"]
-                    },
-                    {
-                        "parameter": "any",
-                        "type": "boolean",
-                        "default": "false",
-                        "is_required": false,
-                        "description": ["Whether or not to choose any type of quote. Even one-worded quotes or action lines"]
-                    },
-                    {
-                        "parameter": "fullScript",
-                        "type": "boolean",
-                        "default": "false",
-                        "is_required": false,
-                        "description": ["Whether or not to get the full script of quotes. To use this, you must provide an episode to get the full script from"]
-                    }
-                ],
-                "responses": [
-                    {
-                        "code": 200,
-                        "description": "retrieving a random/specific quote",
-                        "response": {
-                            "success": true,
-                            "episode": true,
-                            "image": "https://i.quotev.com/img/q/u/16/5/30/e37ac6e9b1-supe.jpg",
-                            "author": "Carl",
-                            "value": "My stomach was making the rumblies."
-                        }
-                    },
-                    {
-                        "code": 200,
-                        "description": "retrieving the full script of an episode",
-                        "response": {
-                            "success": true,
-                            "episode": 1,
-                            "image": "https://i.quotev.com/img/q/u/16/5/30/e37ac6e9b1-supe.jpg",
-                            "quotes": [
-                                {
-                                    "author": "Paul",
-                                    "value": "CAAAARL! THERE IS A DEAD HUMAN IN OUR HOUSE!!"
-                                },
-                                "... More Quotes ..."
-                            ]
-                        }
-                    },
-                    {
-                        "code": 400,
-                        "description": "trying to get a full script without an episode number",
-                        "response": {
-                            "success": false,
-                            "error": "No episode given"
-                        }
-                    },
-                    {
-                        "code": 400,
-                        "description": "specifying an invalid author",
-                        "response": {
-                            "success": false,
-                            "error": "Invalid author"
-                        }
-                    },
-                    {
-                        "code": 400,
-                        "description": "specifying an invalid episode",
-                        "response": {
-                            "success": true,
-                            "error": "Invalid episode"
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
         "api_name": "strangePlanet",
         "requests": [
             {
@@ -557,11 +462,11 @@
         ]
     },
     {
-        "api_name": "office",
+        "api_name": "quotes",
         "requests": [
             {
                 "type": "GET",
-                "endpoint": "/office",
+                "endpoint": "/quotes/office",
                 "description": [
                     "Gets a random line of dialogue from The Office"
                 ],
@@ -569,7 +474,7 @@
                     {
                         "parameter": "season",
                         "type": "int",
-                        "default": "null",
+                        "default": "random",
                         "is_required": false,
                         "description": [
                             "Must be a season in the range 1-9"
@@ -578,7 +483,7 @@
                     {
                         "parameter": "episode",
                         "type": "int",
-                        "default": "null",
+                        "default": "random",
                         "is_required": false,
                         "description": [
                             "The number of the episode to get. If the episode number exceeds the amount of episode in the given season, an error will be given"
@@ -643,15 +548,105 @@
                         }
                     }
                 ]
+            },
+            {
+                "type": "GET",
+                "endpoint": "/quotes/llamas",
+                "description": [
+                    "Retrieves a random line of dialogue from Llamas With Hats"
+                ],
+                "parameters": [
+                    {
+                        "parameter": "episode",
+                        "type": "int",
+                        "default": "random",
+                        "is_required": false,
+                        "description": ["The episode number to get a line from. Can be between 1-12"]
+                    },
+                    {
+                        "parameter": "author",
+                        "type": "string",
+                        "default": "random",
+                        "is_required": false,
+                        "description": ["The speaker to get text from. Can be Carl or Paul"]
+                    },
+                    {
+                        "parameter": "any",
+                        "type": "boolean",
+                        "default": "false",
+                        "is_required": false,
+                        "description": ["Whether or not to choose any type of quote. Even one-worded quotes or action lines"]
+                    },
+                    {
+                        "parameter": "fullScript",
+                        "type": "boolean",
+                        "default": "false",
+                        "is_required": false,
+                        "description": ["Whether or not to get the full script of quotes. To use this, you must provide an episode to get the full script from"]
+                    }
+                ],
+                "responses": [
+                    {
+                        "code": 200,
+                        "description": "retrieving a random/specific quote",
+                        "response": {
+                            "success": true,
+                            "episode": true,
+                            "image": "https://i.quotev.com/img/q/u/16/5/30/e37ac6e9b1-supe.jpg",
+                            "author": "Carl",
+                            "value": "My stomach was making the rumblies."
+                        }
+                    },
+                    {
+                        "code": 200,
+                        "description": "retrieving the full script of an episode",
+                        "response": {
+                            "success": true,
+                            "episode": 1,
+                            "image": "https://i.quotev.com/img/q/u/16/5/30/e37ac6e9b1-supe.jpg",
+                            "quotes": [
+                                {
+                                    "author": "Paul",
+                                    "value": "CAAAARL! THERE IS A DEAD HUMAN IN OUR HOUSE!!"
+                                },
+                                "... More Quotes ..."
+                            ]
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "trying to get a full script without an episode number",
+                        "response": {
+                            "success": false,
+                            "error": "No episode given"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "specifying an invalid author",
+                        "response": {
+                            "success": false,
+                            "error": "Invalid author"
+                        }
+                    },
+                    {
+                        "code": 400,
+                        "description": "specifying an invalid episode",
+                        "response": {
+                            "success": true,
+                            "error": "Invalid episode"
+                        }
+                    }
+                ]
             }
         ]
     },
     {
-        "api_name": "gameOfLife",
+        "api_name": "games",
         "requests": [
             {
                 "type": "GET",
-                "endpoint": "/gameOfLife",
+                "endpoint": "/games/gameOfLife",
                 "description": [
                     "Retrieves specific, or all, attributes of Hasbro's Game of Life"
                 ],
