@@ -9,7 +9,7 @@ from api_methods.morse import MorseAPI
 from api_methods.strange_planet import StrangePlanetAPI
 from api_methods.logic.logic import LogicAPI
 
-# from api_methods.games.games import GamesAPI
+from api_methods.games.games import GamesAPI
 
 from api_methods.secret.redirects import RedirectsAPI
 
@@ -60,10 +60,13 @@ api.add_resource(AnimalsAPI, '/animals')
 api.add_resource(MorseAPI.Encode, '/morse/encode')
 api.add_resource(MorseAPI.Decode, '/morse/decode')
 api.add_resource(StrangePlanetAPI, '/strangePlanet')
+
 api.add_resource(LogicAPI.Parse, '/logic/parse')
 api.add_resource(LogicAPI.QuineMcCluskey, '/logic/qm')
 
-api.add_resource(RedirectsAPI, '/redirects/<str:project>')
+api.add_resource(GamesAPI.GameOfLife, '/gameOfLife')
+
+api.add_resource(RedirectsAPI, '/redirects')
 
 # # # # # # # # # # # # # # # # # # # # 
 

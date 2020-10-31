@@ -58,7 +58,7 @@ class DBWebsite:
             upsert = False
         )
     
-    def add_project(self, mongo_id: str, name: str, id: str=None):
+    def add_project(self, mongo_id: str, name: str, id: str=None) -> [dict, None]:
         """Adds a new project to the redirect collection in the Website
         database
 
@@ -67,11 +67,13 @@ class DBWebsite:
         :param id: An optional ID if you want to specify it differently on the
             website than the given mongo_id
             Note: If this is not specified, it will just be the same as mongo_id
+        
+        :returns: None, if the project was added or an error JSON object
         """
         
         # Check if a project already exists with the specified mongo_id
         if self.get_project(mongo_id) is not None:
-            raise KeyError(f"There is already a project identified by \"{mongo_id}\"")
+            return { "error": "Project already exists" }
         
         # There is no existing project
         project = {
@@ -81,46 +83,62 @@ class DBWebsite:
             "platforms": {}
         }
         self.redirects.insert_one(project)
+        return project
     
-    def remove_project(self, mongo_id: str):
+    def remove_project(self, mongo_id: str) -> [dict, None]:
         """Removes the project with the specified mongo id
 
         :param mongo_id: The ID in mongo of the project to remove
+
+        :returns: The project JSON or None, if a project was not found
+            with the specified ID
         """
         
         # Check if a project exists by the mongo_id
         project_data = self.redirects.find_one_and_delete({"_id": mongo_id})
         if project_data is None:
-            raise FileNotFoundError("There was no project with the specified ID")
+            return { "error": "No project was found" }
         return project_data
     
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     
-    def add_redirect(self, mongo_id: str, platform: Platform, version: str, redirect: str) -> [dict, None]:
+    def add_redirect(self, mongo_id: str, platform: str, version: str, redirect: str) -> [dict, None]:
         """Adds a new redirect to the specified project
 
         :param mongo_id: The ID of the project to add the redirect to
         :param platform: The Platform to set the redirect for
         :param redirect: A Google Drive file ID that points to the file
+
+        :returns: None, if the redirect was added or an error JSON object
         """
+
+        # Check if platform exists
+        found = False
+        for pform in Platform:
+            if platform.lower() == pform.value.lower():
+                found = True
+                break
+        if not found:
+            return { "error": "The platform you specified does not exist" }
 
         # Check if the project exists
         project_data = self.get_project(mongo_id)
         if project_data is None:
-            raise FileNotFoundError("There was no project with the specified ID")
+            return { "error": "There was no project with the specified ID" }
         
         # Add the platform to the project list if needed
         if platform.value not in project_data["platforms"]:
             project_data["platforms"][platform.value] = []
         
         # Insert the redirect into the top of the platform array
-        project_data["platforms"][platform.value].insert(
-            0, {
-                "version": version,
-                "link": DIRECT_DOWNLOAD.format(redirect),
-                "release_date": get_datetime()
-            })
+        redirect_data = {
+            "version": version,
+            "link": DIRECT_DOWNLOAD.format(redirect),
+            "release_date": get_datetime()
+        }
+        project_data["platforms"][platform.value].insert(0, redirect_data)
         self.set_project(mongo_id, project_data)
+        return redirect_data
     
     def remove_redirect(self, mongo_id: str, platform: Platform, index: int) -> [dict, None]:
         """Remove the specified redirect at the specified index
@@ -128,20 +146,22 @@ class DBWebsite:
         :param mongo_id: The ID of the project to remove the redirect from
         :param platform: The Platform to remove the redirect from
         :param index: The index of the redirect to remove
+
+        :returns: None, if the redirect was removed or an error JSON
         """
 
         # Check if the project exists
         project_data = self.get_project(mongo_id)
         if project_data is None:
-            raise FileNotFoundError("There was no project with the specified ID")
+            return { "error": "There was no project with the specified ID" }
         
         # Check if the platform exists
         if platform.value not in project_data["platforms"]:
-            raise NotADirectoryError("The platform you specified does not exist")
+            return { "error": "The platform you specified does not exist" }
         
         # Remove the redirect if possible
         if index >= len(project_data["platforms"][platform.value]):
-            raise IndexError("That redirect index does not exist")
+            return { "error": "The redirect index you specified does not exist" }
         project_data["platforms"][platform.value].remove(index)
         self.set_project(mongo_id, project_data)
     

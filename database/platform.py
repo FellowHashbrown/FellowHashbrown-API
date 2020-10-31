@@ -12,6 +12,10 @@ class Platform(Enum):
 
     ANDROID = "Android"
 
+    MINECRAFT = "Minecraft"
+
+    CROSS_PLATFORM = "Cross Platform"
+
 def get_datetime() -> str:
     """Returns the current day as a human readable date in
     the format of {month} {day}, {year}
