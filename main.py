@@ -48,13 +48,6 @@ def home():
         }
     ), 200
 
-"""
-API.add_resource(api.hangman.HangmanAPI, '/hangman')
-API.add_resource(api.scramble.ScrambleAPI, '/scramble')
-API.add_resource(api.profanity.ProfanityAPI, '/profanity')
-API.add_resource(api.game_of_life.GameOfLifeAPI, '/gameOfLife')
-"""
-
 api.add_resource(AnimalsAPI, '/animals')
 api.add_resource(MorseAPI.Encode, '/morse/encode')
 api.add_resource(MorseAPI.Decode, '/morse/decode')
