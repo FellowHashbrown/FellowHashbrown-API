@@ -13,6 +13,7 @@ from api_methods.games.games import GamesAPI
 from api_methods.quotes.quotes import QuotesAPI
 
 from api_methods.secret.redirects import RedirectsAPI
+from api_methods.secret.omegapsi import OmegaPsiAPI
 
 # # # # # # # # # # # # # # # # # # # # 
 
@@ -62,6 +63,7 @@ api.add_resource(LogicAPI.Parse, '/logic/parse')
 api.add_resource(LogicAPI.QuineMcCluskey, '/logic/qm')
 
 api.add_resource(RedirectsAPI, '/redirects')
+api.add_resource(OmegaPsiAPI, '/omegapsi')
 
 # # # # # # # # # # # # # # # # # # # # 
 
