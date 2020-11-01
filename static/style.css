@@ -366,6 +366,12 @@ input:checked~ul.api-response {
     width: fit-content;
 }
 
+input:checked~label *.dropdown-arrow-right,
+input:not(:checked)~label *.dropdown-arrow-down {
+    visibility: hidden;
+    display: none;
+}
+
 /* - API Parameter Table - */
 
 .required {

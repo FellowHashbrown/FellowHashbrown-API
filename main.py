@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from flask_restful import Api
 from json import load, dumps
 from random import randint
@@ -48,6 +48,11 @@ def home():
             "description": "if you're a developer, you've reached the available APIs that i've written and you know exactly what to do! if you're not a developer, you may not understand this but feel free to try :)"
         }
     ), 200
+
+@app.route("/favicon")
+@app.route("/favicon.ico")
+def favicon():
+    return redirect("/static/favicon.ico"), 302
 
 api.add_resource(AnimalsAPI, '/animals')
 api.add_resource(MorseAPI.Encode, '/morse/encode')

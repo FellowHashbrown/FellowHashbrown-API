@@ -54,7 +54,12 @@
                     {% for request in api.requests -%}
                         <div>
                             <input type="checkbox" class="api-response-label" id="{{ api.api_name }}-request-{{ loop.index0 }}" name="menu" />
-                            <label for="{{ api.api_name }}-request-{{ loop.index0 }}">{{ request.type }} <span class="code-string">{{ request.endpoint }}</span> &#9660;</label>
+                            <label for="{{ api.api_name }}-request-{{ loop.index0 }}">
+                                {{ request.type }} 
+                                <span class="code-string">{{ request.endpoint }}</span> 
+                                <span class="dropdown-arrow-right">&#9654;</span>
+                                <span class="dropdown-arrow-down">&#9660;</span>
+                            </label>
                             <ul class="api-response">
                                 <p>
                                     {% for line in request.description -%}
