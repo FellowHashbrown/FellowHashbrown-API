@@ -38,18 +38,18 @@ class DBQuotes:
     def get_office_quotes(self):
         """Returns all the office quotes in the database"""
         return {
-            doc["_id"]: doc["episodes"]
+            doc["_id"]: doc
             for doc in self.the_office.find()
         }
     
-    def get_office_quote(self, season: int=None, episode: int=None, author: str=None, is_deleted=False):
+    def get_office_quote(self, season: int=None, episode: int=None, is_deleted=False):
         """Returns an office quote from a specific season, episode, and author"""
         quotes = self.get_office_quotes()
 
         # Get a random season and episode
         if season is None and episode is None:
-            season = randint(1, len(quotes)) + 1
-            episode = randint(1, len(quotes[f"season{season}"]))
+            season = randint(1, len(quotes))
+            episode = randint(1, len(quotes[f"season{season}"]["episodes"]))
         elif episode is None:
             if not(1 <= season <= 9):
                 return { "error": "Invalid season" }
@@ -60,17 +60,14 @@ class DBQuotes:
         # Validate the season and episode
         if not(1 <= season <= 9):
             return { "error": "Invalid season" }
-        if not(1 <= episode <= len(quotes[f"season{season}"])):
-            return {" error": "Invalid episode" }
-        quotes = quotes[f"season{season}"][episode - 1]
+        if not(1 <= episode <= len(quotes[f"season{season}"]["episodes"])):
+            return { "error": "Invalid episode" }
+        quotes = quotes[f"season{season}"]["episodes"][episode - 1]["quotes"]
         
         # Search through the quotes given a specific filter of author and is_deleted
         filtered_quotes = []
         for quote in quotes:
-            if ((author is None or 
-                    quote["author"].lower() == author.lower()) and
-                    (is_deleted is None or
-                    is_deleted == quote["deleted"])):
+            if is_deleted is None or is_deleted == quote["deleted"]:
                 filtered_quotes.append(quote)
         return choice(filtered_quotes)
     

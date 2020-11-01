@@ -69,4 +69,39 @@ class QuotesAPI:
         """The Office class will handle the Office API"""
 
         def get(self):
-            return { "success": False, "error": "Not implemented yet" }, 404
+
+            parameters = super().get()
+            season = parameters.get("season")
+            episode = parameters.get("episode")
+            quote_type = parameters.get("type", "any")
+
+            # Validate the season, episode and quote type
+            try:
+                season = int(season)
+            except TypeError:
+                pass
+            except ValueError:
+                return { "success": False, "error": "season must be an integer" }, 400
+            
+            try:
+                episode = int(episode)
+            except TypeError:
+                pass
+            except ValueError:
+                return { "success": False, "error": "episode must be an integer" }, 400
+
+            if quote_type not in [ "aired", "deleted", "any" ]:
+                return { "success": False, "error": "type must be either aired, deleted, or any" }, 400
+            else:
+                if quote_type == "any":
+                    is_deleted = None
+                else:
+                    is_deleted = quote_type == "deleted"
+            
+            # Get a quote and return it
+            quote = database.quotes.get_office_quote(season, episode, is_deleted)
+            quote.update(
+                success = "error" not in quote
+            )
+
+            return quote, 200 if quote["success"] else 400
