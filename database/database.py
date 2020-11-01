@@ -1,6 +1,7 @@
 from .db.game_of_life import DBGameOfLife
 from .db.quotes import DBQuotes
 from .db.website import DBWebsite
+from .db.omegapsi import DBOmegaPsi
 
 class Database:
     """The Database will contain the data for website downloads,
@@ -11,6 +12,7 @@ class Database:
         self.__game_of_life = DBGameOfLife()
         self.__quotes = DBQuotes()
         self.__website = DBWebsite()
+        self.__omegapsi = DBOmegaPsi()
     
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -28,6 +30,11 @@ class Database:
     def website(self) -> DBWebsite:
         """Returns the Website Database object"""
         return self.__website
+    
+    @property
+    def omegapsi(self) -> DBOmegaPsi:
+        """Returns the Omega Psi Database object"""
+        return self.__omegapsi
     
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
