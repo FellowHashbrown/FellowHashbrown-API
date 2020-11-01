@@ -10,7 +10,7 @@ from api_methods.strange_planet import StrangePlanetAPI
 from api_methods.logic.logic import LogicAPI
 
 from api_methods.games.games import GamesAPI
-# from api_methods.quotes.quotes import QuotesAPI
+from api_methods.quotes.quotes import QuotesAPI
 
 from api_methods.secret.redirects import RedirectsAPI
 
@@ -62,8 +62,8 @@ api.add_resource(StrangePlanetAPI, '/strangePlanet')
 
 api.add_resource(GamesAPI.GameOfLife, '/games/gameOfLife')
 
-# API.add_resource(api.shows.llamas.LlamasAPI, '/shows/llama')
-# API.add_resource(api.shows.office.OfficeAPI, '/shows/office')
+api.add_resource(QuotesAPI.Llamas, '/quotes/llamas')
+api.add_resource(QuotesAPI.TheOffice, '/quotes/office')
 
 api.add_resource(LogicAPI.Parse, '/logic/parse')
 api.add_resource(LogicAPI.QuineMcCluskey, '/logic/qm')

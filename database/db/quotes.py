@@ -79,7 +79,7 @@ class DBQuotes:
     def get_llamas_quotes(self):
         """Returns all the llamas with hates quotes in the database"""
         return {
-            doc["_id"]: doc["quotes"]
+            doc["_id"]: doc
             for doc in self.llamas_with_hats.find()
         }
     

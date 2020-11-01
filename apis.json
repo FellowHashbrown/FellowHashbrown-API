@@ -571,13 +571,6 @@
                         "description": ["The speaker to get text from. Can be Carl or Paul"]
                     },
                     {
-                        "parameter": "any",
-                        "type": "boolean",
-                        "default": "false",
-                        "is_required": false,
-                        "description": ["Whether or not to choose any type of quote. Even one-worded quotes or action lines"]
-                    },
-                    {
                         "parameter": "fullScript",
                         "type": "boolean",
                         "default": "false",
