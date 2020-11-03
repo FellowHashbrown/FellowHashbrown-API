@@ -244,13 +244,17 @@ class Tree:
         minterm_qm = QM(
             self.variables,
             true_at_minterms
-        ).solve()
+        ) #.solve()
+        print(str(minterm_qm))
+        minterm_qm = minterm_qm.solve()
 
         maxterm_qm = QM(
             self.variables,
             true_at_maxterms,
             is_maxterm = True
-        ).solve()
+        ) #.solve()
+        print(str(maxterm_qm))
+        maxterm_qm = maxterm_qm.solve()
 
         # Either get the minterm or the maxterm
         #   if neither is specified, get the shortest one

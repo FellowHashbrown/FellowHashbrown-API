@@ -52,9 +52,9 @@ class LogicAPI:
                 return {
                     "success": True,
                     "value": {
-                        "minterm": tree.simplify(get_minterm = True),
-                        "maxterm": tree.simplify(get_minterm = False),
-                        "simplified": tree.simplify(),
+                        "minterm": str(tree.simplify(get_minterm = True)),
+                        "maxterm": str(tree.simplify(get_minterm = False)),
+                        "simplified": str(tree.simplify()),
                         "functional": tree.functional(),
                         "functional_simplified": tree.simplify().functional()
                     }
