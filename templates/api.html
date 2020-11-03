@@ -68,34 +68,36 @@
                                 </p>
                                 <p style="font-weight: bold;">parameters</p>
                                 {% if request.parameters %}
-                                    <table class="api-parameter-table">
-                                        <thead>
-                                            <th>parameter</th>
-                                            <th>type</th>
-                                            <th>default</th>
-                                            <th>description</th>
-                                        </thead>
-                                        <tbody>
-                                            {% for parameter in request.parameters -%}
-                                                <tr>
-                                                    <td>{{ parameter.parameter }}</td>
-                                                    <td>{{ parameter.type }}</td>
-                                                    <td>
-                                                        {% if parameter.is_required %}
-                                                            <span class="required">{{ parameter.default }}</span>
-                                                        {% else %}
-                                                            {{ parameter.default }}
-                                                        {% endif %}
-                                                    </td>
-                                                    <td>
-                                                        {% for line in parameter.description -%}
-                                                            {{ line|safe }} <br>
-                                                        {% endfor %}
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
+                                    <div>
+                                        <table class="api-parameter-table">
+                                            <thead>
+                                                <th>parameter</th>
+                                                <th>type</th>
+                                                <th>default</th>
+                                                <th>description</th>
+                                            </thead>
+                                            <tbody>
+                                                {% for parameter in request.parameters -%}
+                                                    <tr>
+                                                        <td>{{ parameter.parameter }}</td>
+                                                        <td>{{ parameter.type }}</td>
+                                                        <td>
+                                                            {% if parameter.is_required %}
+                                                                <span class="required">{{ parameter.default }}</span>
+                                                            {% else %}
+                                                                {{ parameter.default }}
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {% for line in parameter.description -%}
+                                                                {{ line|safe }} <br>
+                                                            {% endfor %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 {% else %}
                                     none
                                 {% endif %}
@@ -105,7 +107,10 @@
                                 {% for response in request.responses -%}
                                     <li>
                                         <input type="checkbox" class="api-response-label" id="{{ request.endpoint }}-response-{{ response }}" name="menu" />
-                                        <label for="{{ request.endpoint }}-response-{{ response }}">{{ response.description }} <span class="api-response-code">{{ response.code }}</span> &#9660;</label>
+                                        <label for="{{ request.endpoint }}-response-{{ response }}">{{ response.description }} <span class="api-response-code">{{ response.code }}</span> 
+                                            <span class="dropdown-arrow-right">&#9654;</span>
+                                            <span class="dropdown-arrow-down">&#9660;</span>
+                                        </label>
                                         <ul class="api-response">
                                             <div class="api-json-response">
                                                 {{ response.response|safe }}

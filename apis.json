@@ -252,61 +252,19 @@
                 ],
                 "responses": [
                     {
+                        "code": 200,
+                        "description": "getting the result of the quine-mccluskey algorithm",
+                        "response": {
+                            "success": true,
+                            "value": "a AND (b OR c)"
+                        }
+                    },
+                    {
                         "code": 400,
-                        "description": "any errors that come up will follow the same format",
+                        "description": "any errors that come up will follow this same format",
                         "response": {
                             "success": false, 
                             "error": "some error message" 
-                        }
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "api_name": "profanity",
-        "requests": [
-            {
-                "type": "GET",
-                "endpoint": "/profanity",
-                "description": [
-                    "Filters text to test whether or not it is an obfuscated profane word"
-                ],
-                "parameters": [
-                    {
-                        "parameter": "text",
-                        "type": "string",
-                        "default": "required",
-                        "is_required": true,
-                        "description": [
-                            "The text to test for profanity"
-                        ]
-                    }
-                ],
-                "responses": [
-                    {
-                        "code": 200,
-                        "description": "finding a profane word",
-                        "response": {
-                            "success": true,
-                            "profane": true,
-                            "likely_word": "asshole"
-                        }
-                    },
-                    {
-                        "code": 200,
-                        "description": "finding no profanity",
-                        "response": {
-                            "success": true,
-                            "profane": false
-                        }
-                    },
-                    {
-                        "code": 400,
-                        "description": "trying to filter empty text",
-                        "response": {
-                            "success": false,
-                            "error": "Cannot filter empty text"
                         }
                     }
                 ]
