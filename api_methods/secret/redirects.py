@@ -90,6 +90,6 @@ class RedirectsAPI(BaseAPI):
         result = database.website.add_redirect(
             project_id, platform,
             version, redirect)
-        if result is not None:
+        if "error" in result:
             return { "success": False, "error": result["error"] }, 403
         return { "success": True, "value": f"Redirect added to project {project_id}"}, 201

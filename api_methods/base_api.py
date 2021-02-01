@@ -25,19 +25,35 @@ class BaseAPI(Resource):
     """
 
     @abstractmethod
-    def get(self, *args, **kwargs): 
+    def get(self, *args, **kwargs) -> dict: 
         """An abstract method for the GET request on a URL
 
-        Parameters
-        ----------
-            *args
-                A list of arguments to pass through
-            **kwargs
-                A JSON object of keyword arguments to pass through
+        :param args: A list of arguments to pass through
+        :param kwargs: A JSON object of keyword arguments to pass through
         
-        Returns
-        -------
-            dict
-                A JSON object of the URL parameters
+        :returns: A JSON object of the URL parameters
         """
         return dict(request.args)
+    
+    @abstractmethod
+    def post(self, *args, **kwargs) -> dict:
+        """An abstract method for the POST request on a URL
+
+        :param args: A list of arguments to pass through
+        :param kwargs: A JSON object of keyword arguments to pass through
+        
+        :returns: A JSON object of the POST's JSON
+        """
+        return dict(request.json)
+        pass
+    
+    @abstractmethod
+    def put(self, *args, **kwargs) -> dict:
+        """An abstract method for the PUT request on a URL
+
+        :param args: A list of arguments to pass through
+        :param kwargs: A JSON object of keyword arguments to pass through
+        
+        :returns: A JSON object of the PUT's JSON
+        """
+        return dict(request.json)

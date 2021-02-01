@@ -20,7 +20,10 @@ class Bot:
                 """The POST method is able to handle creating a new feature in a pending
                 update of Omega Psi
                 """
-                pass
+
+                json = super().post()
+                
+                
             
             def put(self):
                 """The PUT method is able to handle editing a feature in a pending

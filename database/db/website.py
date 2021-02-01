@@ -117,6 +117,7 @@ class DBWebsite:
         for pform in Platform:
             if platform.lower() == pform.value.lower():
                 found = True
+                platform = pform
                 break
         if not found:
             return { "error": "The platform you specified does not exist" }
